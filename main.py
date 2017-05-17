@@ -32,7 +32,7 @@ def changeSource(optionBox):
         else:
             sign_label = app.getLabel("selected_sign_label")
             # Or update the prediction if sign has been selected
-            if sign_label != "-":
+            if sign_label != "":
                 sign_i = tuple(signs[currentHoroscope].keys()).index(sign_label)
                 clickImage("sign_" + str(sign_i) + "_img")
 
@@ -99,4 +99,5 @@ app = gui("Гороскоп")
 app.setImageLocation("images/")
 app.setStretch("both")
 app.setResizable(False)
+app.setBg("white")
 main()
