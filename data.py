@@ -74,7 +74,7 @@ sources = {
         # "japanese": {},
         # "mayan": {}
     },
-    "horo.mail.ru": {
+    "Гороскопы mail.ru": {
         "zodiac_url": "https://horo.mail.ru/prediction/{sign}/today/",
         "chinese_url": "https://horo.mail.ru/horoscope/{horoscope}/{sign}/",
         "horoscopes": {

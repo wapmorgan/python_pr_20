@@ -1,6 +1,7 @@
 from appJar import gui
 from data import images_folders, signs, sources
 from net import getFromOrakul, getFromMail
+from tkinter import font
 
 currentSource=list(sources.keys())[0]
 currentHoroscope=list(sources[currentSource]["horoscopes"].keys())[0]
@@ -16,7 +17,7 @@ def clickImage(imageLabel):
     app.setImage("selected_sign_img", images_folders[currentHoroscope] + "/" + sign_conf[0] + ".gif")
     if currentSource == "orakul.com":
         prediction=getFromOrakul(sources[currentSource]["horoscopes"][currentHoroscope], sources[currentSource][currentHoroscope][sign_label])
-    elif currentSource == "horo.mail.ru":
+    elif currentSource == "Гороскопы mail.ru":
         prediction=getFromMail(sources[currentSource]["horoscopes"][currentHoroscope], sources[currentSource][currentHoroscope][sign_label])
     app.setMessage("selected_sign_prediction", prediction)
 
@@ -61,13 +62,13 @@ def getSignLabel(sign_label):
     return label
 
 def main():
-    app.addLabelOptionBox("Источник", ["orakul.com", "horo.mail.ru"], 0, 0)
+    app.addLabelOptionBox("Источник", set(sources.keys()), 0, 0)
     app.setOptionBoxChangeFunction("Источник", changeSource)
+    app.setOptionBox("Источник", currentSource)
+    app.n_options["Источник"].config()
 
     app.addLabelOptionBox("Гороскоп", sources[currentSource]["horoscopes"].keys(), 0, 1, 2)
     app.setOptionBoxChangeFunction("Гороскоп", changeHoroscope)
-
-    app.decreaseLabelFont()
 
     current_row=0
     current_column=0
@@ -76,6 +77,7 @@ def main():
     for sign_label, sign_conf in signs[currentHoroscope].items():
         app.addImage("sign_" + str(i) + "_img", images_folders[currentHoroscope] + "/" + sign_conf[0] + ".gif", (current_row * 2) + 1, current_column)
         app.addLabel("sign_" + str(i) + "_label", getSignLabel(sign_label), current_row * 2 + 2, current_column)
+        app.n_labels["sign_" + str(i) + "_label"].config(font=font.Font(size=9))
         app.setImageSubmitFunction("sign_" + str(i) + "_img", clickImage)
 
         if current_column == 3:
@@ -88,6 +90,7 @@ def main():
 
     app.addImage("selected_sign_img", images_folders[currentHoroscope] + "/back.gif", 1, 1, 2)
     app.addLabel("selected_sign_label", "", 2, 1, 2)
+    app.n_labels["selected_sign_label"].config(font=font.Font(weight="bold", size=13))
     app.addMessage("selected_sign_prediction", "Выберите знак", 3, 1, 2)
 
     # bottom slice - START the GUI
@@ -97,6 +100,8 @@ def main():
 # top slice - CREATE the GUI
 app = gui("Гороскоп")
 app.setImageLocation("images/")
+app.decreaseLabelFont()
+# app.messageFont = font.Font(family="Helvetica", size=13)
 app.setStretch("both")
 app.setResizable(False)
 app.setBg("white")

@@ -24,7 +24,7 @@ def getFromOrakul(horoscope, sign):
 
 
 def getFromMail(horoscope, sign):
-    url = sources["horo.mail.ru"][horoscope + "_url"].format(horoscope=horoscope, sign=sign)
+    url = sources["Гороскопы mail.ru"][horoscope + "_url"].format(horoscope=horoscope, sign=sign)
     print("Retrieving " + url + " ...")
     try:
         html = getByUrl(url).decode("utf-8")
