@@ -1,7 +1,7 @@
 from appJar import gui
 from data import images_folders, signs, sources
 from net import getFromOrakul, getFromMail
-from tkinter import font
+from tkinter import font, PhotoImage
 
 currentSource=list(sources.keys())[0]
 currentHoroscope=list(sources[currentSource]["horoscopes"].keys())[0]
@@ -62,13 +62,16 @@ def getSignLabel(sign_label):
     return label
 
 def main():
+    dropdown_img=PhotoImage(file="dropdown.png")
     app.addLabelOptionBox("Источник", set(sources.keys()), 0, 0)
     app.setOptionBoxChangeFunction("Источник", changeSource)
     app.setOptionBox("Источник", currentSource)
-    app.n_options["Источник"].config()
+    app.n_options["Источник"].config(indicatoron=0,compound='right',image=dropdown_img)
 
-    app.addLabelOptionBox("Гороскоп", sources[currentSource]["horoscopes"].keys(), 0, 1, 2)
+    app.addLabelOptionBox("Гороскоп", set(sources[currentSource]["horoscopes"].keys()), 0, 1, 2)
     app.setOptionBoxChangeFunction("Гороскоп", changeHoroscope)
+    app.setOptionBox("Гороскоп", currentHoroscope)
+    app.n_options["Гороскоп"].config(indicatoron=0)
 
     current_row=0
     current_column=0
