@@ -22,7 +22,6 @@ def getFromOrakul(horoscope, sign):
     else:
         return "Данных нет."
 
-
 def getFromMail(horoscope, sign):
     url = sources["Гороскопы mail.ru"][horoscope + "_url"].format(horoscope=horoscope, sign=sign)
     print("Retrieving " + url + " ...")
@@ -31,7 +30,7 @@ def getFromMail(horoscope, sign):
     except error.URLError as e:
         print(e.reason)
         return "Ошибка получения данных"
-    prediction = re.search("\<div class\=\"article__item article__item_alignment_left article__item_html\"\><p>\s*([^\n]+)\s*\<\/p\>", html, re.UNICODE)
+    prediction = re.search("\<div class\=\"article__item article__item_alignment_left article__item_html\"\><p>\s*([^<\n]+)(\<\/p\>|\<br)", html, re.UNICODE)
     if prediction != None:
         return str(prediction.group(1)).replace("<br />", "").replace("&mdash;", "-")
     else:
